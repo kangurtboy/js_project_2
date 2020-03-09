@@ -3,9 +3,18 @@ var picture = [
 		url: 'photos/{{i}}.jpg',
 		likes: 200,
 		comments: 'string',
-		description : 'string'
+		description: 'string'
 	}
-]
+];
+
+function randomLike() {
+	var randomNum = Math.floor(Math.random() * 200 + 1);
+	if (randomNum < 15) {
+		randomNum += 15;
+	}
+	return randomNum
+};
+console.log(randomLike())
 
 
 /* Задача
