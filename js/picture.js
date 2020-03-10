@@ -50,10 +50,10 @@ for (var i = 0; i < 25; i++){
 
 function renderPictures() {
 	//отрисовка фотографии в странице
-	var pictureElement = document.querySelector('#picture-template').content.querySelector('.picture');
-	var pictureImg = pictureElement.querySelector('img');
-	var pictureLike = pictureElement.querySelector('.picture-likes');
-	var pictureComment = pictureElement.querySelector('.picture-comments');
+	var pictureElement = document.querySelector('#picture').content.querySelector('.picture__link');
+	var pictureImg = pictureElement.querySelector('.picture__img');
+	var pictureLike = pictureElement.querySelector('.picture__stat--likes');
+	var pictureComment = pictureElement.querySelector('.picture__stat--comments');
 
 	for (var i = 0; i < pictures.length; i++){
 		pictureImg.src = pictures[i].url;
@@ -65,9 +65,9 @@ function renderPictures() {
 renderPictures();
 function renderGallery() {
 	//отрисовка галлерея
-	var gallery = document.querySelector('.gallery-overlay');
+	var gallery = document.querySelector('.big-picture');
 	gallery.classList.remove('hidden');
-	var galleryImg = gallery.querySelector('.gallery-overlay-image');
+	var galleryImg = gallery.querySelector('.big-picture__img').querySelector('img');
 	var galleryLike = gallery.querySelector('.likes-count');
 	var galleryCommentsCount = gallery.querySelector('.comments-count');
 	galleryImg.src = pictures[0].url;
