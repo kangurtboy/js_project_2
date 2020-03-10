@@ -1,6 +1,7 @@
-var picture = [
+var pictures = [
 	//массив фото который появится на странице
 ];
+var pictureContainer = document.querySelector('.pictures');
 var commentsList = [
 	//Массив с коментариями для фотографии
 	'Всё отлично!',
@@ -39,7 +40,7 @@ function randowValue(arr) {
 
 for (var i = 0; i < 25; i++){
 	//заполню массив picture 25 рандомным данных
-	picture.push({
+	pictures.push({
 		url: `photos/${i + 1}.jpg`,
 		likes: randomLike(),
 		comments: randowValue(commentsList),
@@ -47,6 +48,21 @@ for (var i = 0; i < 25; i++){
 	})
 };
 
+function renderPictures() {
+	//отрисовка фотографии в странице
+	var pictureElement = document.querySelector('#picture-template').content.querySelector('.picture');
+	var pictureImg = pictureElement.querySelector('img');
+	var pictureLike = pictureElement.querySelector('.picture-likes');
+	var pictureComment = pictureElement.querySelector('.picture-comments');
+
+	for (var i = 0; i < pictures.length; i++){
+		pictureImg.src = pictures[i].url;
+		pictureComment.textContent = pictures[i].comments;
+		pictureLike.textContent = pictures[i].likes;
+		pictureContainer.appendChild(pictureElement.cloneNode(true));
+	};
+}
+renderPictures();
 /* Задача
 В файле pictures.js:
 1. Создайте массив, состоящий из 25 сгенерированных JS объектов, которые будут описывать фотографии, размещённые другими пользователями:
