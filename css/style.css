@@ -902,6 +902,7 @@ main {
 
 .big-picture__img img {
   display: block;
+  width: 100%;
 }
 
 .social {
@@ -976,7 +977,7 @@ main {
   left: 5px;
 
   width: 20px;
-  height: 18px;
+  height: 20px;
 
   background-image: url("../img/sprite.svg");
   background-size: 100%;
