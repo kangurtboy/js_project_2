@@ -70,16 +70,19 @@ function renderGallery() {
 	var galleryImg = gallery.querySelector('.big-picture__img').querySelector('img');
 	var galleryDescription = gallery.querySelector('.social__caption');
 	var galleryLike = gallery.querySelector('.likes-count');
-	var galleryCommentsCount = gallery.querySelector('.comments-count');
 	galleryImg.src = pictures[0].url;
-	galleryCommentsCount.textContent = commentsList.length;
 	galleryLike.textContent = pictures[0].likes;
 	galleryDescription.textContent = pictures[0].description;
 	//отрисовка коментарии на основе шаблона
 	var commentItem = gallery.querySelector('.social__comment--template').content.querySelector('.social__comment--text');
+	var commentsCount = gallery.querySelector('.comments-count');
 	var commentText = commentItem.querySelector('.social__text');
 	var commentAvatar = commentItem.querySelector('.social__picture');
 	var commentsContainer = gallery.querySelector('.social__comments');
+	var commentsLoadMore = gallery.querySelector('.social__comment-loadmore');
+	commentsLoadMore.classList.add('visually-hidden');
+	commentsCount.textContent = commentsList.length;
+	commentsCount.parentElement.classList.add('visually-hidden');
 	for (var i = 0; i < commentsList.length; i++){
 		var randomNum = Math.floor(Math.random() * 6 + 1);
 		commentAvatar.src = `img/avatar-${randomNum}.svg`;
