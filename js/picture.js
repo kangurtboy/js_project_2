@@ -68,11 +68,24 @@ function renderGallery() {
 	var gallery = document.querySelector('.big-picture');
 	gallery.classList.remove('hidden');
 	var galleryImg = gallery.querySelector('.big-picture__img').querySelector('img');
+	var galleryDescription = gallery.querySelector('.social__caption');
 	var galleryLike = gallery.querySelector('.likes-count');
 	var galleryCommentsCount = gallery.querySelector('.comments-count');
 	galleryImg.src = pictures[0].url;
+	galleryCommentsCount.textContent = commentsList.length;
 	galleryLike.textContent = pictures[0].likes;
-	galleryCommentsCount.textContent = 1;
+	galleryDescription.textContent = pictures[0].description;
+	//отрисовка коментарии на основе шаблона
+	var commentItem = gallery.querySelector('.social__comment--template').content.querySelector('.social__comment--text');
+	var commentText = commentItem.querySelector('.social__text');
+	var commentAvatar = commentItem.querySelector('.social__picture');
+	var commentsContainer = gallery.querySelector('.social__comments');
+	for (var i = 0; i < commentsList.length; i++){
+		var randomNum = Math.floor(Math.random() * 6 + 1);
+		commentAvatar.src = `img/avatar-${randomNum}.svg`;
+		commentText.textContent = commentsList[i];
+		commentsContainer.appendChild(commentItem.cloneNode(true));
+	}
 }
 renderGallery()
 /* Задача

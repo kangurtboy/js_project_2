@@ -148,17 +148,15 @@
             <p class="social__caption">Тестим новую камеру! =)</p>
             <p class="social__likes">Нравится <span class="likes-count">356</span></p>
           </div>
-          <div class="social__comment-count">5 из <span class="comments-count">125</span> комментариев</div>
+          <div class="social__comment-count">6 из <span class="comments-count">125</span> комментариев</div>
           <div class="social__comment-loadmore">Загрузить еще</div>
           <ul class="social__comments">
-            <li class="social__comment social__comment--text">
-              <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-              Мега фото! Просто обалдеть. Как вам так удалось?
-            </li>
-            <li class="social__comment social__comment--text">
-              <img class="social__picture" src="img/avatar-3.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-               Да это фоташоп!!!!!!!!
-            </li>
+			  <template class="social__comment--template">
+				  <li class="social__comment social__comment--text">
+					<img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
+					<p class="social__text">{{текст комментария}}</p>
+				  </li>
+			  </template>
           </ul>
           <div class="social__footer">
             <img class="social__picture" src="img/avatar-6.svg" alt="Аватар комментатора фотографии" width="35" height="35">
