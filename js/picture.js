@@ -63,6 +63,18 @@ function renderPictures() {
 	};
 }
 renderPictures();
+function renderGallery() {
+	//отрисовка галлерея
+	var gallery = document.querySelector('.gallery-overlay');
+	gallery.classList.remove('hidden');
+	var galleryImg = gallery.querySelector('.gallery-overlay-image');
+	var galleryLike = gallery.querySelector('.likes-count');
+	var galleryCommentsCount = gallery.querySelector('.comments-count');
+	galleryImg.src = pictures[0].url;
+	galleryLike.textContent = pictures[0].likes;
+	galleryCommentsCount.textContent = 1;
+}
+renderGallery()
 /* Задача
 В файле pictures.js:
 1. Создайте массив, состоящий из 25 сгенерированных JS объектов, которые будут описывать фотографии, размещённые другими пользователями:
