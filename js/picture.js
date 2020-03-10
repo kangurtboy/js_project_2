@@ -43,6 +43,15 @@ function randowValue(arr) {
 	return value
 };
 
+for (var i = 0; i < 25; i++){
+	//заполню массив picture 25 рандомным данных
+	picture.push({
+		url: `photos/${i + 1}.jpg`,
+		likes: randomLike(),
+		comments: randowValue(commentsList),
+		description: randowValue(descriptionList)
+	})
+};
 
 /* Задача
 В файле pictures.js:
