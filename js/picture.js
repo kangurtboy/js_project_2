@@ -35,6 +35,13 @@ function randomLike() {
 	}
 	return randomNum
 };
+function randowValue(arr) {
+	//это функция возврашает случайное значение из массива
+	if (Array.isArray(arr)) {
+		var value = arr[Math.floor(Math.random() * arr.length)];
+	}
+	return value
+};
 
 
 /* Задача
