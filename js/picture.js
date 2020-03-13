@@ -44,7 +44,7 @@ for (var i = 0; i < 25; i++) {
   pictures.push({
     url: `photos/${i + 1}.jpg`,
     likes: randomLike(),
-    comments: randowValue(commentsList),
+    comments: randomLike(),
     description: randowValue(descriptionList)
   });
 }
@@ -66,15 +66,16 @@ function renderPictures() {
   }
 }
 renderPictures();
-function renderGallery() {
+function renderGallery(img) {
   //отрисовка галлерея
   gallery.classList.remove("hidden");
   var galleryImg = gallery
     .querySelector(".big-picture__img")
     .querySelector("img");
   var galleryDescription = gallery.querySelector(".social__caption");
-  var galleryLike = gallery.querySelector(".likes-count");
-  galleryImg.src = pictures[0].url;
+	var galleryLike = gallery.querySelector(".likes-count");
+	var galleryClose = gallery.querySelector('.big-picture__cancel');
+  galleryImg.src = img;
   galleryLike.textContent = pictures[0].likes;
   galleryDescription.textContent = pictures[0].description;
   //отрисовка коментарии на основе шаблона
@@ -94,9 +95,11 @@ function renderGallery() {
     commentAvatar.src = `img/avatar-${randomNum}.svg`;
     commentText.textContent = commentsList[i];
     commentsContainer.appendChild(commentItem.cloneNode(true));
-  }
+	};
+	galleryClose.addEventListener('click', function () {
+		gallery.classList.add('hidden')
+	})
 }
-renderGallery();
 /* Задача
 В файле pictures.js:
 1. Создайте массив, состоящий из 25 сгенерированных JS объектов, которые будут описывать фотографии, размещённые другими пользователями:
@@ -137,7 +140,6 @@ o Описание фотографии description вставьте строк�
 5. Спрячьте блоки счётчика комментариев .social__comment-count и загрузки новых комментариев .social__loadmore, добавив им класс .visually-hidden. */
 
 gallery.classList.add("hidden");
-
 var uploadFIleInput = document.querySelector("#upload-file");
 var editWindow = document.querySelector(".img-upload__overlay");
 var imgPreview = editWindow.querySelector(".img-upload__preview");
@@ -161,6 +163,7 @@ var onEditWindowOpen = function(e) {
   }
 };
 var onScaleMouseup = function (e) {
+	//изменение ползунка
 	var scaleValue = editWindow.querySelector('.scale__value');
 	var maxLevel = imgScale.offsetWidth;
 	var scalePin = editWindow.querySelector('.scale__pin');
@@ -169,11 +172,18 @@ var onScaleMouseup = function (e) {
 	scaleValue = e.offsetX + 'px';
 	scaleLevel.style.width = scaleValue;
 	scalePin.style.left = scaleValue;
+};
+var onClickPhotoItem = function (e) {
+	e.preventDefault();	
+	if (e.target.className === 'picture__img') {
+		renderGallery(e.target.src)
+	}
 }
 
 uploadFIleInput.addEventListener("change", onLoadFile);
 editWindow.addEventListener("click", onEditWindowOpen);
-imgScale.addEventListener('mouseup' , onScaleMouseup)
+imgScale.addEventListener('mouseup', onScaleMouseup);
+document.body.addEventListener('click', onClickPhotoItem , false);
 
 /* В этом задании мы начнём реализацию сценария загрузки изображения и его редактирования, а также опишем показ фотографий в полноэкранном режиме.
 Перед выполнением этого задания, нужно вернуть страницу в исходное состояние. Согласно ТЗ, оверлей .big-picture, показывающий фотографию в полноэкранном режиме показывается только по клику на уменьшенное изображение. В прошлом разделе вы выполняли задание, в котором показывали оверлей при загрузке страницы и заполняли его данными из первой сгенерированной фотографии. Теперь нам нужно приберечь этот код до поры: оставим в коде метод, который отрисовывает полноэкранный оверлей, но уберём его вызов, чтобы позже прописать его в одном (или не в одном) из обработчиков событий.
