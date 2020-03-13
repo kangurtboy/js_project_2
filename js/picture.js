@@ -75,9 +75,16 @@ function renderGallery(img) {
   var galleryDescription = gallery.querySelector(".social__caption");
 	var galleryLike = gallery.querySelector(".likes-count");
 	var galleryClose = gallery.querySelector('.big-picture__cancel');
+	var allFotos = document.querySelectorAll('.picture__img');
+	var curentIndex = 0;
+	for (var i = 0; i < pictures.length; i++){
+		if (img === allFotos[i].src) {
+			curentIndex = i;
+		}
+	}
   galleryImg.src = img;
-  galleryLike.textContent = pictures[0].likes;
-  galleryDescription.textContent = pictures[0].description;
+  galleryLike.textContent = pictures[curentIndex].likes;
+	galleryDescription.textContent = pictures[curentIndex].description;
   //отрисовка коментарии на основе шаблона
   var commentItem = gallery
     .querySelector(".social__comment--template")
@@ -174,6 +181,7 @@ var onScaleMouseup = function (e) {
 	scalePin.style.left = scaleValue;
 };
 var onClickPhotoItem = function (e) {
+	//открытие фото в галлереи
 	e.preventDefault();	
 	if (e.target.className === 'picture__img') {
 		renderGallery(e.target.src)
@@ -183,7 +191,8 @@ var onClickPhotoItem = function (e) {
 uploadFIleInput.addEventListener("change", onLoadFile);
 editWindow.addEventListener("click", onEditWindowOpen);
 imgScale.addEventListener('mouseup', onScaleMouseup);
-document.body.addEventListener('click', onClickPhotoItem , false);
+document.body.addEventListener('click', onClickPhotoItem);
+console.log(pictures)
 
 /* В этом задании мы начнём реализацию сценария загрузки изображения и его редактирования, а также опишем показ фотографий в полноэкранном режиме.
 Перед выполнением этого задания, нужно вернуть страницу в исходное состояние. Согласно ТЗ, оверлей .big-picture, показывающий фотографию в полноэкранном режиме показывается только по клику на уменьшенное изображение. В прошлом разделе вы выполняли задание, в котором показывали оверлей при загрузке страницы и заполняли его данными из первой сгенерированной фотографии. Теперь нам нужно приберечь этот код до поры: оставим в коде метод, который отрисовывает полноэкранный оверлей, но уберём его вызов, чтобы позже прописать его в одном (или не в одном) из обработчиков событий.
