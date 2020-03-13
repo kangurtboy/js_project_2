@@ -1,96 +1,102 @@
 var pictures = [
-	//массив фото который появится на странице
+  //массив фото который появится на странице
 ];
-var pictureContainer = document.querySelector('.pictures');
-var gallery = document.querySelector('.big-picture');
+var pictureContainer = document.querySelector(".pictures");
+var gallery = document.querySelector(".big-picture");
 var commentsList = [
-	//Массив с коментариями для фотографии
-	'Всё отлично!',
-	'В целом всё неплохо. Но не всё.',
-	'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-	'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-	'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-	'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
+  //Массив с коментариями для фотографии
+  "Всё отлично!",
+  "В целом всё неплохо. Но не всё.",
+  "Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.",
+  "Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.",
+  "Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.",
+  "Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!"
 ];
 var descriptionList = [
-//Массив описании для фотографии
-	"Тестим новую камеру!",
-	"Затусили с друзьями на море",
-	"Как же круто тут кормят",
-	"Отдыхаем...",
-	"Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......",
-	"Вот это тачка!"
+  //Массив описании для фотографии
+  "Тестим новую камеру!",
+  "Затусили с друзьями на море",
+  "Как же круто тут кормят",
+  "Отдыхаем...",
+  "Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......",
+  "Вот это тачка!"
 ];
 
 function randomLike() {
-	// функция для возврата случайного число на диапазоне 15 , 200 предназначена для лайков фотографии
-	var randomNum = Math.floor(Math.random() * 200 + 1);
-	if (randomNum < 15) {
-		randomNum += 15;
-	}
-	return randomNum
-};
+  // функция для возврата случайного число на диапазоне 15 , 200 предназначена для лайков фотографии
+  var randomNum = Math.floor(Math.random() * 200 + 1);
+  if (randomNum < 15) {
+    randomNum += 15;
+  }
+  return randomNum;
+}
 
 function randowValue(arr) {
-	//это функция возврашает случайное значение из массива
-	if (Array.isArray(arr)) {
-		var value = arr[Math.floor(Math.random() * arr.length)];
-	}
-	return value
-};
+  //это функция возврашает случайное значение из массива
+  if (Array.isArray(arr)) {
+    var value = arr[Math.floor(Math.random() * arr.length)];
+  }
+  return value;
+}
 
-for (var i = 0; i < 25; i++){
-	//заполню массив picture 25 рандомным данных
-	pictures.push({
-		url: `photos/${i + 1}.jpg`,
-		likes: randomLike(),
-		comments: randowValue(commentsList),
-		description: randowValue(descriptionList)
-	})
-};
+for (var i = 0; i < 25; i++) {
+  //заполню массив picture 25 рандомным данных
+  pictures.push({
+    url: `photos/${i + 1}.jpg`,
+    likes: randomLike(),
+    comments: randowValue(commentsList),
+    description: randowValue(descriptionList)
+  });
+}
 
 function renderPictures() {
-	//отрисовка фотографии в странице
-	var pictureElement = document.querySelector('#picture').content.querySelector('.picture__link');
-	var pictureImg = pictureElement.querySelector('.picture__img');
-	var pictureLike = pictureElement.querySelector('.picture__stat--likes');
-	var pictureComment = pictureElement.querySelector('.picture__stat--comments');
+  //отрисовка фотографии в странице
+  var pictureElement = document
+    .querySelector("#picture")
+    .content.querySelector(".picture__link");
+  var pictureImg = pictureElement.querySelector(".picture__img");
+  var pictureLike = pictureElement.querySelector(".picture__stat--likes");
+  var pictureComment = pictureElement.querySelector(".picture__stat--comments");
 
-	for (var i = 0; i < pictures.length; i++){
-		pictureImg.src = pictures[i].url;
-		pictureComment.textContent = pictures[i].comments;
-		pictureLike.textContent = pictures[i].likes;
-		pictureContainer.appendChild(pictureElement.cloneNode(true));
-	};
+  for (var i = 0; i < pictures.length; i++) {
+    pictureImg.src = pictures[i].url;
+    pictureComment.textContent = pictures[i].comments;
+    pictureLike.textContent = pictures[i].likes;
+    pictureContainer.appendChild(pictureElement.cloneNode(true));
+  }
 }
 renderPictures();
 function renderGallery() {
-	//отрисовка галлерея
-	gallery.classList.remove('hidden');
-	var galleryImg = gallery.querySelector('.big-picture__img').querySelector('img');
-	var galleryDescription = gallery.querySelector('.social__caption');
-	var galleryLike = gallery.querySelector('.likes-count');
-	galleryImg.src = pictures[0].url;
-	galleryLike.textContent = pictures[0].likes;
-	galleryDescription.textContent = pictures[0].description;
-	//отрисовка коментарии на основе шаблона
-	var commentItem = gallery.querySelector('.social__comment--template').content.querySelector('.social__comment--text');
-	var commentsCount = gallery.querySelector('.comments-count');
-	var commentText = commentItem.querySelector('.social__text');
-	var commentAvatar = commentItem.querySelector('.social__picture');
-	var commentsContainer = gallery.querySelector('.social__comments');
-	var commentsLoadMore = gallery.querySelector('.social__comment-loadmore');
-	commentsLoadMore.classList.add('visually-hidden');
-	commentsCount.textContent = commentsList.length;
-	commentsCount.parentElement.classList.add('visually-hidden');
-	for (var i = 0; i < commentsList.length; i++){
-		var randomNum = Math.floor(Math.random() * 6 + 1);
-		commentAvatar.src = `img/avatar-${randomNum}.svg`;
-		commentText.textContent = commentsList[i];
-		commentsContainer.appendChild(commentItem.cloneNode(true));
-	}
+  //отрисовка галлерея
+  gallery.classList.remove("hidden");
+  var galleryImg = gallery
+    .querySelector(".big-picture__img")
+    .querySelector("img");
+  var galleryDescription = gallery.querySelector(".social__caption");
+  var galleryLike = gallery.querySelector(".likes-count");
+  galleryImg.src = pictures[0].url;
+  galleryLike.textContent = pictures[0].likes;
+  galleryDescription.textContent = pictures[0].description;
+  //отрисовка коментарии на основе шаблона
+  var commentItem = gallery
+    .querySelector(".social__comment--template")
+    .content.querySelector(".social__comment--text");
+  var commentsCount = gallery.querySelector(".comments-count");
+  var commentText = commentItem.querySelector(".social__text");
+  var commentAvatar = commentItem.querySelector(".social__picture");
+  var commentsContainer = gallery.querySelector(".social__comments");
+  var commentsLoadMore = gallery.querySelector(".social__comment-loadmore");
+  commentsLoadMore.classList.add("visually-hidden");
+  commentsCount.textContent = commentsList.length;
+  commentsCount.parentElement.classList.add("visually-hidden");
+  for (var i = 0; i < commentsList.length; i++) {
+    var randomNum = Math.floor(Math.random() * 6 + 1);
+    commentAvatar.src = `img/avatar-${randomNum}.svg`;
+    commentText.textContent = commentsList[i];
+    commentsContainer.appendChild(commentItem.cloneNode(true));
+  }
 }
-renderGallery()
+renderGallery();
 /* Задача
 В файле pictures.js:
 1. Создайте массив, состоящий из 25 сгенерированных JS объектов, которые будут описывать фотографии, размещённые другими пользователями:
@@ -130,16 +136,32 @@ width="35" height="35">
 o Описание фотографии description вставьте строкой в блок .social__caption.
 5. Спрячьте блоки счётчика комментариев .social__comment-count и загрузки новых комментариев .social__loadmore, добавив им класс .visually-hidden. */
 
+gallery.classList.add("hidden");
 
-gallery.classList.add('hidden');
+var uploadFIleInput = document.querySelector("#upload-file");
+var editWindow = document.querySelector(".img-upload__overlay");
+var imgPreview = editWindow.querySelector(".img-upload__preview");
 
-var uploadFIleInput = document.querySelector('#upload-file');
-var imgEditWindow = document.querySelector('.img-upload__overlay');
-var onLoadFile = function () {
-	//при загрузки фото открывается окно редактирование
-	imgEditWindow.classList.remove('hidden');
+var onLoadFile = function() {
+  //при загрузки фото открывается окно редактирование
+  editWindow.classList.remove("hidden");
 };
-uploadFIleInput.addEventListener('change', onLoadFile);
+var onEditWindowOpen = function(e) {
+  if (e.target.classList.contains("img-upload__cancel")) {
+    //закрытие окно
+    editWindow.classList.add("hidden");
+    uploadFIleInput.value = "";
+  } else if (e.target.classList.contains("effects__preview")) {
+	  //применение филтров при нажании на соответствющих блоках
+    if (imgPreview.classList[1]) {
+      imgPreview.classList.remove(imgPreview.classList[1]);
+    }
+    imgPreview.classList.add(e.target.classList[1]);
+  }
+};
+
+uploadFIleInput.addEventListener("change", onLoadFile);
+editWindow.addEventListener("click", onEditWindowOpen);
 /* В этом задании мы начнём реализацию сценария загрузки изображения и его редактирования, а также опишем показ фотографий в полноэкранном режиме.
 Перед выполнением этого задания, нужно вернуть страницу в исходное состояние. Согласно ТЗ, оверлей .big-picture, показывающий фотографию в полноэкранном режиме показывается только по клику на уменьшенное изображение. В прошлом разделе вы выполняли задание, в котором показывали оверлей при загрузке страницы и заполняли его данными из первой сгенерированной фотографии. Теперь нам нужно приберечь этот код до поры: оставим в коде метод, который отрисовывает полноэкранный оверлей, но уберём его вызов, чтобы позже прописать его в одном (или не в одном) из обработчиков событий.
 Загрузка изображения и показ формы редактирования
