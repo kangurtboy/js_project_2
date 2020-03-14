@@ -155,6 +155,7 @@ var uploadFIleInput = document.querySelector("#upload-file");
 var editWindow = document.querySelector(".img-upload__overlay");
 var imgPreview = editWindow.querySelector(".img-upload__preview");
 var imgScale = editWindow.querySelector(".scale__line");
+var submitForm = document.querySelector('.img-upload__form');
 
 var onLoadFile = function() {
   //при загрузки фото открывается окно редактирование
@@ -192,11 +193,18 @@ var onClickPhotoItem = function(e) {
 	  
   }
 };
-
+var hashTag = editWindow.querySelector('.text__hashtags');
+var onSubmmitPhoto = function (e) {
+	if (hashTag.value[0] !== '#') {
+		e.preventDefault();
+		hashTag.setCustomValidity('ошибка в хеще');
+	}
+}
 uploadFIleInput.addEventListener("change", onLoadFile);
 editWindow.addEventListener("click", onEditWindowOpen);
 imgScale.addEventListener("mouseup", onScaleMouseup);
 document.body.addEventListener("click", onClickPhotoItem);
+submitForm.addEventListener('submit', onSubmmitPhoto);
 
 /* В этом задании мы начнём реализацию сценария загрузки изображения и его редактирования, а также опишем показ фотографий в полноэкранном режиме.
 Перед выполнением этого задания, нужно вернуть страницу в исходное состояние. Согласно ТЗ, оверлей .big-picture, показывающий фотографию в полноэкранном режиме показывается только по клику на уменьшенное изображение. В прошлом разделе вы выполняли задание, в котором показывали оверлей при загрузке страницы и заполняли его данными из первой сгенерированной фотографии. Теперь нам нужно приберечь этот код до поры: оставим в коде метод, который отрисовывает полноэкранный оверлей, но уберём его вызов, чтобы позже прописать его в одном (или не в одном) из обработчиков событий.
