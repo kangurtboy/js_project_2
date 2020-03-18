@@ -1,15 +1,6 @@
 (function () {
 	window.data = {};
 	window.data.pictures = [];
-	for (var i = 0; i < 25; i++) {
-		//заполню массив picture 25 рандомным данных
-		window.data.pictures.push({
-			url: `photos/${i + 1}.jpg`,
-			likes: randomLike(),
-			comments: randomLike(),
-			description: randowValue(descriptionList)
-		});
-	};
 	window.data.commentsList = [
 		//Массив с коментариями для фотографии
 		"Всё отлично!",
@@ -28,4 +19,13 @@
 		"Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......",
 		"Вот это тачка!"
 	];
+	for (var i = 0; i < 25; i++) {
+		//заполню массив picture 25 рандомным данных
+		window.data.pictures.push({
+			url: `photos/${i + 1}.jpg`,
+			likes: window.utils.randomLike(),
+			comments: window.utils.randomLike(),
+			description: window.utils.randowValue(window.data.descriptionList)
+		});
+	};
 })();

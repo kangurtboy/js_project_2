@@ -1,25 +1,26 @@
 (function () {
+	window.gallery = document.querySelector(".big-picture");
 	function renderGallery(img) {
 		//отрисовка галлерея
-		gallery.classList.remove("hidden");
-		var galleryImg = gallery
+		window.gallery.classList.remove("hidden");
+		var galleryImg = window.gallery
 		  .querySelector(".big-picture__img")
 		  .querySelector("img");
-		var galleryDescription = gallery.querySelector(".social__caption");
-		var galleryLike = gallery.querySelector(".likes-count");
-		var galleryClose = gallery.querySelector(".big-picture__cancel");
+		var galleryDescription = window.gallery.querySelector(".social__caption");
+		var galleryLike = window.gallery.querySelector(".likes-count");
+		var galleryClose = window.gallery.querySelector(".big-picture__cancel");
 		var allFotos = document.querySelectorAll(".picture__img");
 		var curentIndex = 0;
-		for (var i = 0; i < pictures.length; i++) {
+		for (var i = 0; i < window.data.pictures.length; i++) {
 		  if (img === allFotos[i].src) {
 			curentIndex = i;
 		  }
 		}
 		galleryImg.src = img;
-		galleryLike.textContent = pictures[curentIndex].likes;
-		galleryDescription.textContent = pictures[curentIndex].description;
+		galleryLike.textContent = window.data.pictures[curentIndex].likes;
+		galleryDescription.textContent = window.data.pictures[curentIndex].description;
 		galleryClose.addEventListener("click", function() {
-		  gallery.classList.add("hidden");
+			gallery.classList.add("hidden");
 		});
 	};
 	var onClickPhotoItem = function(e) {

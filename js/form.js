@@ -1,5 +1,5 @@
 (function () {
-	var hashTag = editWindow.querySelector('.text__hashtags');
+	var hashTag = window.editWindow.querySelector('.text__hashtags');
 	var onInvalidHashtag = function (e) {
 		//валидация хештега
 		if (hashTag.value[0] !== '#') {
