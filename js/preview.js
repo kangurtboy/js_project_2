@@ -15,8 +15,6 @@
 		phobos: 'blur(1px)',
 		heat: 'brightness(0.60)'
 	}
-
-
 	var onLoadFile = function () {
 		//при загрузки фото открывается окно редактирование
 		window.editWindow.classList.remove("hidden");
@@ -57,17 +55,15 @@
 		};
 		onSelectFilter(e)
 	};
-
 	var onScaleMouseup = function (e) {
 		//изменение ползунка
 		var maxLevel = imgScale.offsetWidth;
-		scaleValue = e.offsetX + "px";
+		scaleValue.value = e.offsetX;
 		if (e.target !== scalePin) {
-			scaleLevel.style.width = scaleValue;
+			scaleLevel.style.width = scaleValue.value + "px";
 			filterLevel = (Math.floor((scaleLevel.offsetWidth * 100) / maxLevel) + 1) / 100;
-			scalePin.style.left = scaleValue;
+			scalePin.style.left = scaleValue.value + "px";
 		}
-		console.log(imgPreview.style.filter = `blur(${filterLevel * 5}px)`)
 		//изменение уровня филтра при изменение ползунка
 		if (imgPreview.classList.contains('effects__preview--chrome')) {
 			imgPreview.style.filter = `grayscale(${filterLevel})`;
@@ -81,8 +77,45 @@
 			imgPreview.style.filter = `brightness(${filterLevel * 3})`;
 		}
 	};
+	var onMouseDown = function (e) {
+		var scale = window.editWindow.querySelector('.img-upload__scale');
+		function onMouseMove(moveEvent) {
+			var currentLevel = 0;
+			if (moveEvent.target === scalePin) {
+				currentLevel = scaleLevel.offsetWidth + moveEvent.offsetWidth;
+			} else if (e.target === imgScale) {
+				currentLevel = scaleLevel.offsetWidth + scalePin.offsetWidth * 2;
+			} else {
+				currentLevel = moveEvent.offsetX - scalePin.offsetWidth;
+			}
+			if (currentLevel > 0 && currentLevel <= imgScale.offsetWidth) {
+				filterLevel = (Math.floor((scaleLevel.offsetWidth * 100) / imgScale.offsetWidth) + 1) / 100;
+				scaleLevel.style.width = currentLevel + 'px';
+				scalePin.style.left = currentLevel + 'px';
+			}
+			//изменение уровня филтра при изменение ползунка
+			if (imgPreview.classList.contains('effects__preview--chrome')) {
+				imgPreview.style.filter = `grayscale(${filterLevel})`;
+			} else if (imgPreview.classList.contains('effects__preview--sepia')) {
+				imgPreview.style.filter = `sepia(${filterLevel})`;
+			} else if (imgPreview.classList.contains('effects__preview--marvin')) {
+				imgPreview.style.filter = `invert(${filterLevel})`;
+			} else if (imgPreview.classList.contains('effects__preview--phobos')) {
+				imgPreview.style.filter = `blur(${filterLevel * 5}px)`;
+			} else if (imgPreview.classList.contains('effects__preview--heat')) {
+				imgPreview.style.filter = `brightness(${filterLevel * 3})`;
+			}
+		};
+		function onMouseUp(upEvent) {
+			scale.removeEventListener('mousemove', onMouseMove);
+		}
+		window.editWindow.addEventListener('mouseup', onMouseUp);
+		scale.addEventListener('mousemove', onMouseMove);
+	}
 
 	uploadFIleInput.addEventListener("change", onLoadFile);
 	editWindow.addEventListener("click", onEditWindowOpen);
 	imgScale.addEventListener("click", onScaleMouseup);
+	scalePin.addEventListener('mousedown', onMouseDown);
+	window.editWindow.classList.remove('hidden');
 })();
