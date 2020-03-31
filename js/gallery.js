@@ -19,6 +19,7 @@
 		galleryImg.src = img;
 		galleryLike.textContent = window.data.pictures[curentIndex].likes;
 		galleryDescription.textContent = window.data.pictures[curentIndex].description;
+		window.renderComments(window.data.pictures[curentIndex].comments);
 		galleryClose.addEventListener("click", function() {
 			gallery.classList.add("hidden");
 		});
