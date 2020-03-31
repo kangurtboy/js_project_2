@@ -2,7 +2,7 @@
 	window.backend = {};
 	window.data = {};
 	window.data.pictures = [];
-	window.serverStatus = document.querySelector('.img-upload__message--loading');
+	window.serverStatus = document.querySelector('.img-upload__message--error');
 	var form = document.querySelector('.img-upload__form');
 	window.backend.load = function () {
 		//загрузка данных с сервера
@@ -26,10 +26,12 @@
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', 'https://js.dump.academy/kekstagram');
 		xhr.addEventListener('load', function (e) {
-			window.setupBlock.classList.add('hidden');
+			window.editWindow.classList.add('hidden');
 		});
 		xhr.addEventListener('error', function (e) {
 			onError(xhr.status);
+			window.editWindow.classList.add('hidden');
+
 		});
 		xhr.send(new FormData(data));
 	};
