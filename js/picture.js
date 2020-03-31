@@ -12,7 +12,7 @@
 	
 	  for (var i = 0; i < window.data.pictures.length; i++) {
 		pictureImg.src = window.data.pictures[i].url;
-		pictureComment.textContent = window.data.pictures[i].comments;
+		pictureComment.textContent = window.data.pictures[i].comments.length;
 		pictureLike.textContent = window.data.pictures[i].likes;
 		pictureContainer.appendChild(pictureElement.cloneNode(true));
 	  }
