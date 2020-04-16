@@ -8,8 +8,8 @@
 		//загрузка данных с сервера
 		var xhr = new XMLHttpRequest();
 		xhr.responseType = 'json';
-		xhr.timeout = 10000;
-		xhr.open('GET', 'https://js.dump.academy/kekstagram/data');
+		xhr.timeout = 100000;
+		xhr.open('GET', 'https://javascript.pages.academy/kekstagram/data');
 		xhr.addEventListener('load', function () {
 			onLoad(xhr.response);
 		});
@@ -24,7 +24,7 @@
 	};
 	window.backend.save = function (data) {
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'https://js.dump.academy/kekstagram');
+		xhr.open('POST', 'https://javascript.pages.academy/kekstagram');
 		xhr.addEventListener('load', function (e) {
 			window.editWindow.classList.add('hidden');
 		});
