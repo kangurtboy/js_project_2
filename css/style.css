@@ -198,7 +198,7 @@ main {
 
 /* Фотки других пользователей .pictures */
 
-.pictures {
+.pictures__list {
   display: -ms-grid;
   display: grid;
   grid-gap: 10px;
@@ -1213,7 +1213,7 @@ main {
     width: 980px;
   }
 
-  .pictures {
+  .pictures__list {
     -ms-grid-columns: (1fr)[5];
         grid-template-columns: repeat(5, 1fr);
   }
@@ -1234,7 +1234,7 @@ main {
     width: 600px;
   }
 
-  .pictures {
+  .pictures__list {
     -ms-grid-columns: (1fr)[3];
         grid-template-columns: repeat(3, 1fr);
   }
