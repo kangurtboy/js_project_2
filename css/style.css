@@ -1052,6 +1052,10 @@ main {
           align-items: center;
 }
 
+.social__comment--text img{
+	flex-shrink: 0;
+}
+
 .social__footer {
   border-top: 1px solid #cccccc;
 }
