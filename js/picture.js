@@ -11,29 +11,40 @@
 	
 	window.renderPictures = function () { 
 		//отрисовка фотографии в странице
-		pictureFiltersTab.classList.remove('img-filters--inactive');
 		pictureContainer.innerHTML = '';
-		if (sortedPictures.length === 0) {
-			sortedPictures = window.data.pictures;
-		}
-		for (var i = 0; i < sortedPictures.length; i++) {
-			pictureImg.src = sortedPictures[i].url;
-			pictureComment.textContent = sortedPictures[i].comments.length;
-			pictureLike.textContent = sortedPictures[i].likes;
+		for (var i = 0; i < window.data.pictures.length; i++) {
+			pictureImg.src = window.data.pictures[i].url;
+			pictureComment.textContent = window.data.pictures[i].comments.length;
+			pictureLike.textContent = window.data.pictures[i].likes;
 			pictureContainer.appendChild(pictureElement.cloneNode(true));
 		};
 	};
-	pictureFiltersTab.addEventListener('click', onSortingPictures);
+	window.sortingPictures = function () {
+		//сортировка фотографии на странице
+		sortedPictures = window.data.pictures;
+		pictureFiltersTab.classList.remove('img-filters--inactive');
+		pictureFiltersTab.addEventListener('click', onSortingPictures);
+	};
 	function onSortingPictures(evt) {
-		if (evt.target.id === 'filter-popular') {
-			sortedPictures = window.data.pictures;
-			window.renderPictures();
-		} else if (evt.target.id === 'filter-new') {
-			sortedPictures = [];
+		var currentTarget = evt.target;
+		var activeElement = pictureFiltersTab.querySelector('.img-filters__button--active');
+		if (currentTarget.classList.contains('img-filters__button')) {
+			activeElement.classList.remove('img-filters__button--active');
+			currentTarget.classList.add('img-filters__button--active');
+		};
+		if (currentTarget.id === 'filter-popular') {
+			window.data.pictures = sortedPictures;
+		} else if (currentTarget.id === 'filter-new') {
+			window.data.pictures = [];
 			for (var i = 0; i < 10; i++){
-				sortedPictures.push(window.utils.randowValue(window.data.pictures));
+				window.data.pictures.push(window.utils.randowValue(sortedPictures));
 			};
-			window.renderPictures();
+		} else if (currentTarget.id === 'filter-discussed') {
+			window.data.pictures = sortedPictures.slice();
+			window.data.pictures.sort(function (a, b) {
+				return b.comments.length - a.comments.length
+			});
 		}
-	}
+		window.renderPictures();
+	};
 })();

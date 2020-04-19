@@ -43,6 +43,7 @@
 	function onLoad(data) {
 		window.data.pictures = data;
 		serverStatus.classList.add('hidden');
+		window.sortingPictures();
 		window.renderPictures();
 
 	};
