@@ -35,9 +35,21 @@
 		if (currentTarget.id === 'filter-popular') {
 			window.data.pictures = sortedPictures;
 		} else if (currentTarget.id === 'filter-new') {
+			//добавление 10 случайных и не повторяших фотографии
 			window.data.pictures = [];
-			for (var i = 0; i < 10; i++){
-				window.data.pictures.push(window.utils.randowValue(sortedPictures));
+			window.data.pictures.push(window.utils.randowValue(sortedPictures));
+			while (window.data.pictures.length < 10) {
+				var randowPictureItem = window.utils.randowValue(sortedPictures);
+				var cheking = window.data.pictures.every(function (item) {
+					if (randowPictureItem !== item) {
+						return true;
+					} else {
+						return false
+					}
+				});
+				if (cheking) {
+					window.data.pictures.push(randowPictureItem)
+				};
 			};
 		} else if (currentTarget.id === 'filter-discussed') {
 			window.data.pictures = sortedPictures.slice();
