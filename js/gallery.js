@@ -16,6 +16,7 @@
 			curentIndex = i;
 		  }
 		}
+		window.currentComments = window.data.pictures[curentIndex].comments;
 		galleryImg.src = img;
 		galleryLike.textContent = window.data.pictures[curentIndex].likes;
 		galleryDescription.textContent = window.data.pictures[curentIndex].description;
