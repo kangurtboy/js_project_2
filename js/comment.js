@@ -16,14 +16,16 @@
   var loadedCommentsCountElement = window.gallery.querySelector(
     ".comments-count--showed"
   );
-  var comments;
   var loadedCommentsCount = 5;
+  var comments;
   window.renderComments = function (commentArray) {
+    comments = window.data.pictures[CurrentPhotoIndex].comments;
+    loadedCommentsCount =
+      commentArray.length <= loadedCommentsCount ? commentArray.length : 5;
+    commentsContainerElement.innerHTML = "";
     //отрисовка коментарии на основе шаблона
-    comments = window.currentComments;
     commentsCountElement.textContent = commentArray.length;
     loadedCommentsCountElement.textContent = loadedCommentsCount;
-    commentsContainerElement.innerHTML = "";
     for (var i = 0; i < loadedCommentsCount; i++) {
       commentAvatarElement.src = commentArray[i].avatar;
       commentTextElement.textContent = commentArray[i].message;
@@ -32,20 +34,18 @@
   };
 
   function onClickLoadmoreElement() {
+    //нажание на кнопку загрузить еще
     var remainderCommentsCount = comments.length - loadedCommentsCount;
-    console.log(remainderCommentsCount < loadedCommentsCount);
-
+    console.log(loadedCommentsCount);
     if (remainderCommentsCount < loadedCommentsCount) {
       loadedCommentsCount += remainderCommentsCount;
-    } else {
-      loadedCommentsCount += 5;
-	  };
-	  if (comments.length === loadedCommentsCount) {
-		commentsLoadMoreElement.classList.add("hidden");
-	  } else {
-		commentsLoadMoreElement.classList.remove("hidden");
-	  }
+	}
+
+    if (comments.length === loadedCommentsCount) {
+      commentsLoadMoreElement.classList.add("hidden");
+    }
     renderComments(comments);
   }
+
   commentsLoadMoreElement.addEventListener("click", onClickLoadmoreElement);
 })();
