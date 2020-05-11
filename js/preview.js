@@ -1,7 +1,10 @@
-(function() {
+(function () {
   var uploadFIleInput = document.querySelector("#upload-file");
   window.editWindow = document.querySelector(".img-upload__overlay");
   var imgPreview = window.editWindow.querySelector(".img-upload__preview");
+  var closeEditWndowElement = window.editWindow.querySelector(
+    ".img-upload__cancel"
+  );
   var imgScale = window.editWindow.querySelector(".scale__line");
   var scaleValue = editWindow.querySelector(".scale__value");
   var scalePin = editWindow.querySelector(".scale__pin");
@@ -12,14 +15,14 @@
     sepia: "sepia(0.2)",
     marvin: "invert(0.2)",
     phobos: "blur(1px)",
-    heat: "brightness(0.60)"
+    heat: "brightness(0.60)",
   };
-  var onLoadFile = function() {
+  var onLoadFile = function () {
     //при загрузки фото открывается окно редактирование
     window.editWindow.classList.remove("hidden");
     imgScale.parentElement.classList.add("hidden");
   };
-  var onSelectFilter = function(e) {
+  var onSelectFilter = function (e) {
     if (e.target.classList.contains("effects__preview")) {
       //применение филтров при нажании на соответствющих блоках
       scaleLevel.style.width = "20%";
@@ -45,15 +48,14 @@
       }
     }
   };
-  var onEditWindowOpen = function(e) {
-    if (e.target.classList.contains("img-upload__cancel")) {
-      //закрытие окно
-      editWindow.classList.add("hidden");
-      uploadFIleInput.value = "";
-    }
-    onSelectFilter(e);
+  var onEditWindowClose = function (e) {
+    //закрытие окно
+    editWindow.classList.add("hidden");
+	  uploadFIleInput.value = "";
+	  imgPreview.style.filter = "none";
+	  imgScale.parentElement.classList.add("hidden");
   };
-  var onScaleMouseup = function(e) {
+  var onScaleMouseup = function (e) {
     //изменение ползунка
     var maxLevel = imgScale.offsetWidth;
     scaleValue.value = e.offsetX;
@@ -76,7 +78,7 @@
       imgPreview.style.filter = `brightness(${filterLevel * 3})`;
     }
   };
-  var onMouseDown = function(e) {
+  var onMouseDown = function (e) {
     var scale = window.editWindow.querySelector(".img-upload__scale");
     var startCoord =
       window.editWindow.offsetWidth / 2 -
@@ -115,7 +117,9 @@
   };
 
   uploadFIleInput.addEventListener("change", onLoadFile);
-  editWindow.addEventListener("click", onEditWindowOpen);
+  closeEditWndowElement.addEventListener("click", onEditWindowClose);
+  window.editWindow.addEventListener('click', onSelectFilter);
   imgScale.addEventListener("click", onScaleMouseup);
   scalePin.addEventListener("mousedown", onMouseDown);
+  window.utils.keyEvent(27, onEditWindowClose);
 })();
