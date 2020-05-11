@@ -1,6 +1,5 @@
 (function () {
 	window.gallery = document.querySelector(".big-picture");
-	window.galleryOpen = false;
 	window.CurrentPhotoIndex = 0;
 	function renderGallery(img) {
 		//отрисовка галлерея
@@ -17,7 +16,6 @@
 			CurrentPhotoIndex = i;
 		  }
 		};
-		window.galleryOpen = true;
 		window.currentComments = window.data.pictures[CurrentPhotoIndex].comments;
 		galleryImg.src = img;
 		galleryLike.textContent = window.data.pictures[CurrentPhotoIndex].likes;
@@ -25,7 +23,7 @@
 		window.renderComments(window.data.pictures[CurrentPhotoIndex].comments);
 		galleryClose.addEventListener("click", function() {
 			gallery.classList.add("hidden");
-			window.galleryOpen = false;
+			window.resetComment();
 		});
 	};
 	var onClickPhotoItem = function(e) {
