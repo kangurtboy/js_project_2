@@ -1,22 +1,23 @@
 (function () {
-  var uploadFIleInput = document.querySelector("#upload-file");
-  window.editWindow = document.querySelector(".img-upload__overlay");
-  var imgPreview = window.editWindow.querySelector(".img-upload__preview");
-  var closeEditWndowElement = window.editWindow.querySelector(
-    ".img-upload__cancel"
-  );
-  var imgScale = window.editWindow.querySelector(".scale__line");
-  var scaleValue = editWindow.querySelector(".scale__value");
-  var scalePin = editWindow.querySelector(".scale__pin");
-  var scaleLevel = editWindow.querySelector(".scale__level");
-  var filterLevel;
-  var defaultFilter = {
-    chrome: "grayscale(0.2)",
-    sepia: "sepia(0.2)",
-    marvin: "invert(0.2)",
-    phobos: "blur(1px)",
-    heat: "brightness(0.60)",
-  };
+	var uploadFIleInput = document.querySelector("#upload-file");
+	window.editWindow = document.querySelector(".img-upload__overlay");
+	var imgPreview = window.editWindow.querySelector(".img-upload__preview");
+	var closeEditWndowElement = window.editWindow.querySelector(
+		".img-upload__cancel"
+		);
+		var imgScale = window.editWindow.querySelector(".scale__line");
+		var scaleValue = editWindow.querySelector(".scale__value");
+		var scalePin = editWindow.querySelector(".scale__pin");
+		var scaleLevel = editWindow.querySelector(".scale__level");
+		var filterLevel;
+		var defaultFilter = {
+			chrome: "grayscale(0.2)",
+			sepia: "sepia(0.2)",
+			marvin: "invert(0.2)",
+			phobos: "blur(1px)",
+			heat: "brightness(0.60)",
+		};
+		var defaultValueImgScale = 100;
   var onLoadFile = function () {
     //при загрузки фото открывается окно редактирование
     window.editWindow.classList.remove("hidden");
@@ -51,9 +52,9 @@
   var onEditWindowClose = function (e) {
     //закрытие окно
     editWindow.classList.add("hidden");
-	  uploadFIleInput.value = "";
-	  imgPreview.style.filter = "none";
-	  imgScale.parentElement.classList.add("hidden");
+    uploadFIleInput.value = "";
+    imgPreview.style.filter = "none";
+    imgScale.parentElement.classList.add("hidden");
   };
   var onScaleMouseup = function (e) {
     //изменение ползунка
@@ -115,10 +116,38 @@
     window.editWindow.addEventListener("mouseup", onMouseUp);
     scale.addEventListener("mousemove", onMouseMove);
   };
+  var onScaleImg = function (e) {
+    //изменение масштаба изображение
+    var resizePlusElement = window.editWindow.querySelector(
+      ".resize__control--plus"
+    );
+    var resizeMinusElement = window.editWindow.querySelector(
+      ".resize__control--minus"
+    );
+    var resizeValueElement = window.editWindow.querySelector(
+      ".resize__control--value"
+    );
+    resizeValueElement.value = `${defaultValueImgScale}%`;
+    if (e.target === resizePlusElement) {
+      if (defaultValueImgScale <= 75) {
+        defaultValueImgScale += 25;
+		  resizeValueElement.value = `${defaultValueImgScale}%`;
+		  imgPreview.style.transform = `scale(${defaultValueImgScale / 100})`;
+      }
+    }
+    if (e.target === resizeMinusElement) {
+      if (defaultValueImgScale >= 50) {
+        defaultValueImgScale -= 25;
+		  resizeValueElement.value = `${defaultValueImgScale}%`;
+		  imgPreview.style.transform = `scale(0.${defaultValueImgScale})`;
+      }
+    }
+  };
 
   uploadFIleInput.addEventListener("change", onLoadFile);
   closeEditWndowElement.addEventListener("click", onEditWindowClose);
-  window.editWindow.addEventListener('click', onSelectFilter);
+  window.editWindow.addEventListener("click", onSelectFilter);
+  window.editWindow.addEventListener("click", onScaleImg);
   imgScale.addEventListener("click", onScaleMouseup);
   scalePin.addEventListener("mousedown", onMouseDown);
   window.utils.keyEvent(27, onEditWindowClose);

@@ -21,7 +21,6 @@
       if (evt.keyCode === keyCode) {
         callback();
 		};
-		console.log(evt.keyCode);
     });
   };
 })();
