@@ -1,23 +1,25 @@
 (function () {
-	var uploadFIleInput = document.querySelector("#upload-file");
-	window.editWindow = document.querySelector(".img-upload__overlay");
-	var imgPreview = window.editWindow.querySelector(".img-upload__preview");
-	var closeEditWndowElement = window.editWindow.querySelector(
-		".img-upload__cancel"
-		);
-		var imgScale = window.editWindow.querySelector(".scale__line");
-		var scaleValue = editWindow.querySelector(".scale__value");
-		var scalePin = editWindow.querySelector(".scale__pin");
-		var scaleLevel = editWindow.querySelector(".scale__level");
-		var filterLevel;
-		var defaultFilter = {
-			chrome: "grayscale(0.2)",
-			sepia: "sepia(0.2)",
-			marvin: "invert(0.2)",
-			phobos: "blur(1px)",
-			heat: "brightness(0.60)",
-		};
-		var defaultValueImgScale = 100;
+  var uploadFIleInput = document.querySelector("#upload-file");
+  window.editWindow = document.querySelector(".img-upload__overlay");
+  var imgPreview = window.editWindow.querySelector(".img-upload__preview");
+  var closeEditWndowElement = window.editWindow.querySelector(
+    ".img-upload__cancel"
+  );
+  var imgScale = window.editWindow.querySelector(".scale__line");
+  var scaleValue = editWindow.querySelector(".scale__value");
+  var scalePin = editWindow.querySelector(".scale__pin");
+  var scaleLevel = editWindow.querySelector(".scale__level");
+  var hashtagElement = editWindow.querySelector(".text__hashtags");
+  var commentTextAreaElement = editWindow.querySelector(".text__description");
+	var filterLevel;
+  var defaultFilter = {
+    chrome: "grayscale(0.2)",
+    sepia: "sepia(0.2)",
+    marvin: "invert(0.2)",
+    phobos: "blur(1px)",
+    heat: "brightness(0.60)",
+  };
+  var defaultValueImgScale = 100;
   var onLoadFile = function () {
     //при загрузки фото открывается окно редактирование
     window.editWindow.classList.remove("hidden");
@@ -55,6 +57,8 @@
     uploadFIleInput.value = "";
     imgPreview.style.filter = "none";
     imgScale.parentElement.classList.add("hidden");
+    hashtagElement.value = "";
+    commentTextAreaElement.value = "";
   };
   var onScaleMouseup = function (e) {
     //изменение ползунка
@@ -131,24 +135,38 @@
     if (e.target === resizePlusElement) {
       if (defaultValueImgScale <= 75) {
         defaultValueImgScale += 25;
-		  resizeValueElement.value = `${defaultValueImgScale}%`;
-		  imgPreview.style.transform = `scale(${defaultValueImgScale / 100})`;
+        resizeValueElement.value = `${defaultValueImgScale}%`;
+        imgPreview.style.transform = `scale(${defaultValueImgScale / 100})`;
       }
     }
     if (e.target === resizeMinusElement) {
       if (defaultValueImgScale >= 50) {
         defaultValueImgScale -= 25;
-		  resizeValueElement.value = `${defaultValueImgScale}%`;
-		  imgPreview.style.transform = `scale(0.${defaultValueImgScale})`;
+        resizeValueElement.value = `${defaultValueImgScale}%`;
+        imgPreview.style.transform = `scale(0.${defaultValueImgScale})`;
       }
     }
   };
-
+	var onFocusInput = function (e) {
+		document.removeEventListener('keydown' , onKeyDown)
+  };
+	var onBlurInput = function (e) {
+		document.addEventListener('keydown', onKeyDown);
+	};
+	var onKeyDown = function (e) {
+		if (e.keyCode === 27) {
+			onEditWindowClose();
+		};
+	}
+	document.addEventListener('keydown', onKeyDown);
+  hashtagElement.addEventListener("focus", onFocusInput);
+  hashtagElement.addEventListener("blur", onBlurInput);
+  commentTextAreaElement.addEventListener("blur", onBlurInput);
+  commentTextAreaElement.addEventListener("focus", onFocusInput);
   uploadFIleInput.addEventListener("change", onLoadFile);
   closeEditWndowElement.addEventListener("click", onEditWindowClose);
   window.editWindow.addEventListener("click", onSelectFilter);
   window.editWindow.addEventListener("click", onScaleImg);
   imgScale.addEventListener("click", onScaleMouseup);
   scalePin.addEventListener("mousedown", onMouseDown);
-  window.utils.keyEvent(27, onEditWindowClose);
 })();
