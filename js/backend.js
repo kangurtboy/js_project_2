@@ -2,6 +2,12 @@
 	window.backend = {};
 	window.data = {};
 	window.data.pictures = [];
+	var serverCodeMap = {
+		400: "Неверный запрос",
+		401: "Ползователь не авторизован",
+		404: "Ничего не найдено",
+		default: "Ошибка сервера"
+	  };
 	window.serverStatus = document.querySelector('.img-upload__message--error');
 	var form = document.querySelector('.img-upload__form');
 	window.backend.load = function () {
@@ -49,18 +55,6 @@
 	};
 	function onError(errorStatus) {
 		serverStatus.classList.remove('hidden');
-		switch (errorStatus) {
-			case 400:
-				serverStatus.textContent = 'Неверны запрос';
-				break;
-			case 401:
-				serverStatus.textContent = 'Ползователь не авторизован';
-				break;
-			case 404:
-				serverStatus.textContent = 'Ничего не найдено';
-				break;
-			default:
-				serverStatus.textContent = 'Ошибка сервера';
-		}
+		serverStatus.textContent = serverCodeMap[errorStatus] || serverCodeMap.default;
 	};
 })();
