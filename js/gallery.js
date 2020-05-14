@@ -51,7 +51,7 @@
 	};
 	var onEsc = function (e) {
 		//при нажании клавиша esc
-		if (e.keyCode === 27) {
+		if (e.keyCode === 27 && !window.gallery.classList.contains('hidden')) {
 			onGalleryClose();
 		}
 	}
