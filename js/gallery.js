@@ -26,7 +26,7 @@
 	};
 	var onClickPhotoItem = function (e) {
 		//открытие фото в галлереи
-		e.preventDefault();
+		
 		if (e.target.className === "picture__img") {
 			renderGallery(e.target.src);
 		};

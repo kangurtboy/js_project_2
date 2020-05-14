@@ -11,7 +11,7 @@
   var scaleLevel = editWindow.querySelector(".scale__level");
   var hashtagElement = editWindow.querySelector(".text__hashtags");
   var commentTextAreaElement = editWindow.querySelector(".text__description");
-	var filterLevel;
+  var filterLevel;
   var defaultFilter = {
     chrome: "grayscale(0.2)",
     sepia: "sepia(0.2)",
@@ -25,6 +25,17 @@
     window.editWindow.classList.remove("hidden");
     imgScale.parentElement.classList.add("hidden");
   };
+  var filterClassMap = {
+    "effects__preview--chrome": (imgPreview.style.filter =
+      defaultFilter.chrome),
+    "effects__preview--sepia": (imgPreview.style.filter = defaultFilter.sepia),
+    "effects__preview--marvin": (imgPreview.style.filter =
+      defaultFilter.marvin),
+    "effects__preview--phobos": (imgPreview.style.filter =
+      defaultFilter.phobos),
+    "effects__preview--heat": (imgPreview.style.filter = defaultFilter.heat),
+    "effects__preview--none": (imgPreview.style.filter = "none"),
+  };
   var onSelectFilter = function (e) {
     if (e.target.classList.contains("effects__preview")) {
       //применение филтров при нажании на соответствющих блоках
@@ -35,20 +46,10 @@
       }
       imgPreview.classList.add(e.target.classList[1]);
       imgScale.parentElement.classList.remove("hidden");
-      if (e.target.classList.contains("effects__preview--chrome")) {
-        imgPreview.style.filter = defaultFilter.chrome;
-      } else if (e.target.classList.contains("effects__preview--sepia")) {
-        imgPreview.style.filter = defaultFilter.sepia;
-      } else if (e.target.classList.contains("effects__preview--marvin")) {
-        imgPreview.style.filter = defaultFilter.marvin;
-      } else if (e.target.classList.contains("effects__preview--phobos")) {
-        imgPreview.style.filter = defaultFilter.phobos;
-      } else if (e.target.classList.contains("effects__preview--heat")) {
-        imgPreview.style.filter = defaultFilter.heat;
-      } else if (e.target.classList.contains("effects__preview--none")) {
-        imgPreview.style.filter = "none";
+      if (e.target.classList.contains("effects__preview--none")) {
         imgScale.parentElement.classList.add("hidden");
       }
+      imgPreview.style.filter = filterClassMap[e.target.classList[1]];
     }
   };
   var onEditWindowClose = function (e) {
@@ -101,7 +102,7 @@
         scaleLevel.style.width = currentLevel + "px";
         scalePin.style.left = currentLevel + "px";
       }
-      //изменение уровня филтра при изменение ползунка
+      //изменение уровня филтра при перемешение ползунка
       if (imgPreview.classList.contains("effects__preview--chrome")) {
         imgPreview.style.filter = `grayscale(${filterLevel})`;
       } else if (imgPreview.classList.contains("effects__preview--sepia")) {
@@ -147,18 +148,18 @@
       }
     }
   };
-	var onFocusInput = function (e) {
-		document.removeEventListener('keydown' , onKeyDown)
+  var onFocusInput = function (e) {
+    document.removeEventListener("keydown", onKeyDown);
   };
-	var onBlurInput = function (e) {
-		document.addEventListener('keydown', onKeyDown);
-	};
-	var onKeyDown = function (e) {
-		if (e.keyCode === 27) {
-			onEditWindowClose();
-		};
-	}
-	document.addEventListener('keydown', onKeyDown);
+  var onBlurInput = function (e) {
+    document.addEventListener("keydown", onKeyDown);
+  };
+  var onKeyDown = function (e) {
+    if (e.keyCode === 27) {
+      onEditWindowClose();
+    }
+  };
+  document.addEventListener("keydown", onKeyDown);
   hashtagElement.addEventListener("focus", onFocusInput);
   hashtagElement.addEventListener("blur", onBlurInput);
   commentTextAreaElement.addEventListener("blur", onBlurInput);
