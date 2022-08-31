@@ -15,7 +15,7 @@
 		var xhr = new XMLHttpRequest();
 		xhr.responseType = 'json';
 		xhr.timeout = 100000;
-		xhr.open('GET', 'https://javascript.pages.academy/kekstagram/data');
+		xhr.open('GET', 'https://24.javascript.pages.academy/kekstagram/data');
 		xhr.addEventListener('load', function () {
 			onLoad(xhr.response);
 		});
